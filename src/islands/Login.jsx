@@ -22,20 +22,16 @@ export default function AuthSideBackground() {
             time += 0.015;
 
             const waves = [
-                { amplitude: 60, frequency: 0.005, speed: 1.0, color: 'rgba(255, 255, 255, 0.15)' },
-                { amplitude: 90, frequency: 0.003, speed: 1.5, color: 'rgba(255, 255, 255, 0.08)' },
-                { amplitude: 40, frequency: 0.008, speed: 0.7, color: 'rgba(255, 255, 255, 0.2)' },
+                { amplitude: 90, frequency: 0.005, speed: 1.0, color: 'rgba(255, 255, 255, 0.15)' },
+                { amplitude: 90, frequency: 0.003, speed: 1.5, color: 'rgba(255, 255, 255, 0.15)' },
+                { amplitude: 90, frequency: 0.008, speed: 0.7, color: 'rgba(255, 255, 255, 0.31)' },
             ];
 
             const centerY = canvas.height / 2;
-
-            // Dibujar cada onda
             waves.forEach(wave => {
                 ctx.beginPath();
                 for (let x = 0; x <= canvas.width; x++) {
-                    // Fórmula matemática de la onda
                     const y = centerY + Math.sin(x * wave.frequency + time * wave.speed) * wave.amplitude;
-
                     if (x === 0) {
                         ctx.moveTo(x, y);
                     } else {
@@ -52,7 +48,6 @@ export default function AuthSideBackground() {
 
         render();
 
-        // Limpieza al desmontar el componente
         return () => {
             window.removeEventListener('resize', resizeCanvas);
             cancelAnimationFrame(animationFrameId);
@@ -60,12 +55,16 @@ export default function AuthSideBackground() {
     }, []);
 
     return (
-        <div className="bg-[#14161A] text-white p-[52px] flex flex-col justify-between relative overflow-hidden h-screen">
-            <canvas
-                ref={canvasRef}
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full opacity-60 pointer-events-none"
-            ></canvas>
+        <div className="relative bg-slate-950 h-screen overflow-hidden">
+            <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 w-full h-full opacity-60 pointer-events-none">
+            </canvas>
+
+            <div className="absolute bottom-8 left-8 right-8 sm:bottom-10 sm:left-10 sm:right-10">
+                <p className="text-white text-xs sm:text-sm leading-relaxed text-left opacity-50">
+                    Catálogo educativo con audio propio, libre o autorizado. <br /> CIT2308 · Desarrollo Web · Universidad Diego Portales
+                </p>
+            </div>
+            
         </div>
     );
 }
