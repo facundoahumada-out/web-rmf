@@ -1,9 +1,7 @@
+import Login from "./islands/Login.jsx";
+
 function App() {
-  return (
-    <div id="app">
-      <h1>web-rmf</h1>
-    </div>
-  )
+  return <Login onAuth={(usuario) => console.log('Usuario logueado', usuario)} />;
 }
 
-export default App
+export default App;
