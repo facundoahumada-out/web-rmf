@@ -1,71 +1,87 @@
 import React, { useState } from "react";
 
-export default function AuthSideBackground() {
+export default function LoginSite({ onAuth}) {
     
     const [tab, setTab] = useState('login');
-    let formulario;
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [name, setName] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
+    const handleLogin = (e) => {
+        e.preventDefault();
+        onAuth({ email }); 
+    };
+
+    const handleRegister = (e) => {
+        e.preventDefault();
+        console.log("Intentando registrar:", { name, email });
+    };
+
+    let formulario;
     if (tab === 'login') {
         formulario = (
-            <div className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1.5">
                         Correo
                     </label>
-                    <input type="email" placeholder="tu@correo.cl" className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
+                    <input type="email" placeholder="tu@correo.cl" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
                 </div>
 
                 <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1.5">
                         Contraseña
                     </label>
-                    <input type="password" placeholder="••••••••" className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
+                    <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
                 </div>
 
                 <div className="flex justify-end -mt-1.5">
                     <a href="/recuperar-contraseña" onClick={(e) => e.preventDefault()} className="text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">¿Olvidaste tu contraseña?</a>
                 </div>
 
-                <button type="button" className="w-full h-11 rounded-xl cursor-pointer bg-slate-900 text-white font-semibold text-sm transition-transform transition-all hover:text-gray-300 active:scale-[.98]">
+                <button type="submit" className="w-full h-11 rounded-xl cursor-pointer bg-slate-900 text-white font-semibold text-sm transition-transform transition-all hover:text-gray-300 active:scale-[.98]">
                     Entrar
                 </button>
-            </div>
+            </form>
         );
     } else {
         formulario = (
-            <div className="space-y-4">
+            <form onSubmit={handleRegister} className="space-y-4">
                 <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1.5">
                         Nombre
                     </label>
-                    <input type="text" placeholder="Cómo te gustaría que te llamemos" className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
+                    <input type="text" placeholder="Cómo te gustaría que te llamemos" value={name} onChange={(e) => setName(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
                 </div>
 
                 <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1.5">
                         Correo
                     </label>
-                    <input type="email" placeholder="tu@correo.cl" className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
+                    <input type="email" placeholder="tu@correo.cl" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
                 </div>
 
                 <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1.5">
                         Contraseña
                     </label>
-                    <input type="text" placeholder="Mínimo 8 caracteres" className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
+                    <input type="password" placeholder="Mínimo 8 caracteres" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
                 </div>
 
                 <div>
                     <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                        Contraseña
+                        Confirmar Contraseña
                     </label>
-                    <input type="password" placeholder="••••••••" className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
+                    <input type="password" placeholder="••••••••" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
                 </div>
 
-                <button type="button" className="w-full h-11 rounded-xl cursor-pointer bg-slate-900 text-white font-semibold text-sm transition-transform transition-all hover:text-gray-300 active:scale-[.98]">
+                <button type="submit" className="w-full h-11 rounded-xl cursor-pointer bg-slate-900 text-white font-semibold text-sm transition-transform transition-all hover:text-gray-300 active:scale-[.98]">
                     Registrarse
                 </button>
-            </div>
+            </form>
         );
     }
 
