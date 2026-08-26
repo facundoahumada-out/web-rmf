@@ -56,18 +56,18 @@ const verificarToken = (req,res,next) => {
   
   try {
     const user = jwtService.decodeJWT(token);
-    res.locals.user = user; //
+    res.locals.user = user; 
     next();
   } catch (error) {
     return res.status(401).json({ error: 'Token inválido o expirado' });
   }
 };
 
-
 app.get('/protected', verificarToken, (req, res) => { 
   const user = res.locals.user;
   res.json({ mensaje: "Usuario confirmado", usuario: user });
 });
+
 
 const PORT = 3000;
 app.listen(PORT, () => {

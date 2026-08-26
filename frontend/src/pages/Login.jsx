@@ -23,7 +23,8 @@ export default function LoginSite({ onAuth}) {
             const data = await response.json();
 
             if (response.ok) {
-                onAuth({ mail, token: data.token }); 
+                localStorage.setItem('token', data.token);
+                onAuth({ mail, token: data.token });
             } else {
                 setError(data.error || 'Credenciales incorrectas');
             }
@@ -164,13 +165,3 @@ export default function LoginSite({ onAuth}) {
     );
     
 }
-
-try {
-        const response = await fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ mail, password })
-        });
-    } catch (error) {
-        console.error('Error durante el login', error);
-    }

@@ -8,7 +8,7 @@ export default class JWTService{
 
 
 generateJWT(FoundUser){
-    return jwt.sign({ id: FoundUser.id, email: FoundUser.email, rol: FoundUser.rol },JWTService.SECRET,{expiresIn: JWTService.EXPIRATION});
+    return jwt.sign({ id: FoundUser.id, mail: FoundUser.mail, rol: FoundUser.rol, nombre:FoundUser.nombre },JWTService.SECRET,{expiresIn: JWTService.EXPIRATION});
 }
 decodeJWT(token){
     return jwt.verify(token,JWTService.SECRET);
