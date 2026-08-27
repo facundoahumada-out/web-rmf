@@ -1,10 +1,18 @@
-import React from 'react';
+import {useState} from 'react';
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-gray-800">Bienvenido a la Página de Inicio</h1>
-      <p className="mt-4 text-lg text-gray-600">Esta es la página principal de nuestra aplicación.</p>
-    </div>
+    <nav className="fixed top-0 left-0 right-0 flex align-center justify-between h-16 px-4 bg-white border-b border-slate-200">
+      <div className="flex items-center gap-2">
+        <span className="material-symbols-outlined gap-2 pr-2 bg-gradient-to-r via-slate-500 to-slate-800 bg-clip-text text-transparent">waves</span>
+        <span className="text-lg font-bold tracking-tight text-slate-900">Sonora</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="flex items-center">
+          <span className="material-symbols-outlined gap-2 bg-gradient-to-r via-slate-500 to-slate-800 bg-clip-text text-transparent">Home</span>
+          <span className="text-sm font-medium text-slate-900">Inicio</span>
+        </div>
+      </div>
+    </nav>
   );
 }
