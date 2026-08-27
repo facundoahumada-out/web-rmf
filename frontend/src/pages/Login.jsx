@@ -3,21 +3,65 @@ import React, { useState } from "react";
 export default function LoginSite({ onAuth}) {
     
     const [tab, setTab] = useState('login');
-    const [email, setEmail] = useState('');
+    const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        onAuth({ email }); 
+        setLoading(true);
+         try {
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mail, password })
+            });
+            
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                onAuth({ mail, token: data.token });
+            } else {
+                setError(data.error || 'Credenciales incorrectas');
+            }
+        } catch (error) {
+            console.error('Error durante el login', error);
+            setError('Error de conexión con el servidor');
+        } 
+        finally {
+            setLoading(false);
+        }
     };
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-        console.log("Intentando registrar:", { name, email });
+        setLoading(true);
+          try {
+            const response = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mail, password, rol: 'Oyente', name })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Registro correcto');
+                setTab('login');
+            } else {
+                setError(data.error || 'Error durante el registro');
+            }
+        } catch (error) {
+            console.error('Error durante el registro', error);
+            setError('Error de conexión con el servidor');
+        }
+        finally {
+            setLoading(false);
+        }
     };
 
     let formulario;
@@ -28,7 +72,7 @@ export default function LoginSite({ onAuth}) {
                     <label className="block text-xs font-semibold text-slate-600 mb-1.5">
                         Correo
                     </label>
-                    <input type="email" placeholder="tu@correo.cl" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
+                    <input type="email" placeholder="tu@correo.cl" value={mail} onChange={(e) => setMail(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
                 </div>
 
                 <div>
@@ -61,7 +105,7 @@ export default function LoginSite({ onAuth}) {
                     <label className="block text-xs font-semibold text-slate-600 mb-1.5">
                         Correo
                     </label>
-                    <input type="email" placeholder="tu@correo.cl" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
+                    <input type="email" placeholder="tu@correo.cl" value={mail} onChange={(e) => setMail(e.target.value)} className="w-full h-11 rounded-xl border border-slate-200 px-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900" />
                 </div>
 
                 <div>
@@ -84,6 +128,7 @@ export default function LoginSite({ onAuth}) {
             </form>
         );
     }
+
 
     return (
         <div className="relative bg-slate-950 min-h-screen overflow-hidden">
@@ -118,4 +163,5 @@ export default function LoginSite({ onAuth}) {
 
         </div>
     );
+    
 }

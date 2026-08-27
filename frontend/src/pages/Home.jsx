@@ -1,6 +1,14 @@
-import {useState} from 'react';
+<<<<<<< HEAD
+import {useState,} from 'react';
 
-export default function Home() {
+export default function Home({ onLogout }) {
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    onLogout();
+    window.location.href = 'Login.jsx'
+  }
+
   return (
     <nav className="fixed top-0 left-0 right-0 flex align-center justify-between h-16 px-4 bg-white border-b border-slate-200">
       <div className="flex items-center gap-2">
@@ -14,5 +22,9 @@ export default function Home() {
         </div>
       </div>
     </nav>
+
+    <button onClick={handleLogout}className="absolute top-6 right-6 bg-slate-900 hover:bg-slate-700 text-white font-semibold py-2 px-5 rounded-full transition-colors cursor-pointer text-sm shadow-md active:scale-95">
+      Cerrar sesión
+    </button>
   );
 }
