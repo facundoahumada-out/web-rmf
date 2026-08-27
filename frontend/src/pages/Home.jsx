@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import {useState,} from 'react';
+import {useState} from 'react';
 
 export default function Home({ onLogout }) {
 
@@ -22,9 +21,5 @@ export default function Home({ onLogout }) {
         </div>
       </div>
     </nav>
-
-    <button onClick={handleLogout}className="absolute top-6 right-6 bg-slate-900 hover:bg-slate-700 text-white font-semibold py-2 px-5 rounded-full transition-colors cursor-pointer text-sm shadow-md active:scale-95">
-      Cerrar sesión
-    </button>
   );
 }
