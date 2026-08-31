@@ -1,26 +1,12 @@
-import mysql from 'mysql2/promise';
+import {MongoClient} from 'mongodb';
 import dotenv from 'dotenv';
 
+const MONGODB_URI = process.env.MONGODB_URI;
+
 dotenv.config();
+const client = new MongoClient(MONGODB_URI, { maxPoolSize: 10 });
+export const db = client.db('sonora');
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+export const connectDB = () => client.connect();
 
 
-pool.getConnection()
-  .then((connection) => {
-    console.log('Conectado a base de datos');
-    connection.release(); 
-  })
-  .catch((err) => {
-    console.error('Error conectando a la base de datos:', err.message);
-  });
-
-export default pool;
