@@ -11,11 +11,7 @@ function App() {
     }
     return null;
   });
-  */
-
-  // Estado modificado para cargar Home directamente:
-  const [sesion, setSesion] = useState({ token: "token-temporal" });
-
+  
   if (!sesion) {
     return <LoginSite onAuth={setSesion} />;
   }
